@@ -1,0 +1,45 @@
+
+services:
+  db:
+    image: docker.io/library/mariadb:10.6
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  web:
+    image: docker.io/lthub/moodle:education-4.5.12   # UBC LT Hub — Moodle 4.5 LTS
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy             # attend que la BDD soit prête (évite la course au 1er run)
+    ports:
+      - "${MOODLE_HTTP_PORT}:80"               # port hôte défini dans .env (8088, cf. ~/.claude/PORTS.md)
+    environment:
+      - MOODLE_DB_TYPE=mariadb
+      - MOODLE_DB_HOST=db
+      - MOODLE_DB_NAME=${DB_NAME}
+      - MOODLE_DB_USER=${DB_USER}
+      - MOODLE_DB_PASSWORD=${DB_PASSWORD}
+      - MOODLE_URL=${MOODLE_URL}
+      - MOODLE_SITE_FULLNAME=${MOODLE_SITE_FULLNAME}
+      - MOODLE_SITE_SHORTNAME=${MOODLE_SITE_SHORTNAME}
+      - MOODLE_SITE_LANG=${MOODLE_SITE_LANG}
+      - MOODLE_ADMIN_USER=${MOODLE_ADMIN_USER}
+      - MOODLE_ADMIN_PASS=${MOODLE_ADMIN_PASS}
+      - MOODLE_ADMIN_EMAIL=${MOODLE_ADMIN_EMAIL}
+    volumes:
+      - moodledata:/moodledata
+
+volumes:
+  db_data:
+  moodledata:
