@@ -1,13 +1,13 @@
 
 services:
   db:
-    image: docker.io/library/mariadb:10.6
+    image: docker.io/library/mariadb:11.4   # MariaDB 11.4 LTS — recommended for Moodle 4.5 (min 10.6.7)
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
-      - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
