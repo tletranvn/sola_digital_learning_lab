@@ -24,3 +24,19 @@ test("keeps the foundation routes usable on a narrow keyboard-driven viewport", 
   await page.keyboard.press("Enter");
   await expect(page.locator("#main-content")).toBeFocused();
 });
+
+test("persists and resets course progress in the browser", async ({ page }) => {
+  await page.goto("/courses/control");
+  await expect(page.getByRole("heading", { name: "What Is Within My Control?" })).toBeVisible();
+
+  await page.getByRole("button", { name: /complete and continue/i }).click();
+  await expect(page.getByRole("heading", { name: "From the Stoa to Epictetus" })).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "From the Stoa to Epictetus" })).toBeVisible();
+  await expect(page.locator(".progress-summary strong")).toHaveText("17%");
+
+  await page.getByRole("button", { name: /reset local progress/i }).click();
+  await expect(page.getByRole("heading", { name: "A practical distinction" })).toBeVisible();
+  await expect(page.locator(".progress-summary strong")).toHaveText("0%");
+});

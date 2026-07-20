@@ -49,6 +49,7 @@ npm run lint
 npm test
 npm run test:e2e
 npm run build
+npm run build:static
 ```
 
 GitHub Actions runs typecheck, lint, unit tests, and the production build on pushes to `dev` and
@@ -62,4 +63,6 @@ SCORM qualification phase.
 
 ## Status
 
-Phase 0 is complete. The Next.js foundation is being initialized in Phase 1.
+Phases 0–2 are complete: the deployed Next.js foundation now includes a validated, portable course
+model, local MDX, a reusable course player, anonymous browser progress, and a tested static-export
+build. Phase 3 will establish the reusable interaction and accessibility design system.

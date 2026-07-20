@@ -1,34 +1,14 @@
-export const courses = [
-  {
-    slug: "control",
-    number: "01",
-    title: "What Is Within My Control?",
-    description:
-      "Explore control, influence, and uncertainty through an interactive philosophical portico.",
-    format: "3D classification",
-    duration: "20–25 min",
-    status: "In design",
-  },
-  {
-    slug: "freedom-providence",
-    number: "02",
-    title: "Freedom and Providence",
-    description:
-      "Map the relationships between freedom, responsibility, grace, trust, and passivity.",
-    format: "Interactive diagram",
-    duration: "15–20 min",
-    status: "Planned",
-  },
-  {
-    slug: "meaning-adversity",
-    number: "03",
-    title: "Meaning in Adversity",
-    description: "Compare three interpretive frameworks through an animated, branching situation.",
-    format: "Branching narrative",
-    duration: "20–25 min",
-    status: "Planned",
-  },
-] as const;
+import { courseDefinitions } from "@/lib/content/courses";
+
+export const courses = courseDefinitions.map((course) => ({
+  slug: course.slug,
+  number: course.number,
+  title: course.title,
+  description: course.description,
+  format: course.format,
+  duration: `${course.estimatedMinutes} min`,
+  status: course.status,
+}));
 
 export type Course = (typeof courses)[number];
 
