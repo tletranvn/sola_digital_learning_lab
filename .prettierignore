@@ -1,0 +1,10 @@
+.next
+coverage
+dist
+node_modules
+out
+playwright-report
+test-results
+docs-perso
+integrations/moodle
+package-lock.json
