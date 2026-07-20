@@ -1,5 +1,5 @@
 # ============================================================
-#  .gitignore — projet e-learning (Moodle + mini app LTI)
+#  .gitignore — Sola - Digital Learning Lab
 # ============================================================
 
 # --- Docs personnels (préparation entretien, non publics) ---
@@ -9,10 +9,11 @@
 # JAMAIS committer de clés / secrets (STITCH_API_KEY, clés LTI, etc.)
 .env
 .env.*
-!.env.example          # on garde l'exemple sans valeurs réelles
+# On garde les exemples sans valeurs réelles, y compris le banc Moodle.
+!**/.env.example
 *.local
 
-# --- Clés & certificats (clé privée LTI, TLS...) -----------
+# --- Clés & certificats ------------------------------------
 *.pem
 *.key
 *.p12
@@ -30,7 +31,9 @@ yarn-error.log*
 pnpm-debug.log*
 .yarn/
 
-# --- Build & bundlers (Vite / React) -----------------------
+# --- Build & bundlers (Next.js / React) --------------------
+.next/
+out/
 dist/
 build/
 .vite/
@@ -43,14 +46,16 @@ coverage/
 playwright-report/
 test-results/
 
-# --- Docker : données persistantes montées en local -------
-# (ne pas versionner les volumes de données Moodle / BDD)
+# --- Docker : données persistantes du banc de test Moodle --
 moodledata/
 /data/
 *-data/
 db-data/
 postgres-data/
 mariadb-data/
+
+# Captures locales de l'ancien prototype Moodle.
+/integrations/moodle/legacy/*.png
 
 # --- Logs --------------------------------------------------
 logs/
@@ -72,3 +77,6 @@ desktop.ini
 # --- Divers ------------------------------------------------
 tmp/
 .temp/
+
+docs-perso/
+
